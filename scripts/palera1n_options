@@ -54,7 +54,8 @@ elif [ "$jbtype" = "Rootful" ]; then
   "4" "Safe Mode" OFF \
   "5" "Restore RootFS" OFF \
   "6" "Serial" OFF \
-  "7" "Debug" ON 3>&1 1>&2 2>&3)"
+  "7" "Re-Create FakeFS" OFF \
+  "8" "Debug" ON 3>&1 1>&2 2>&3)"
   if [ $? = 0 ]; then
       output=""
       for OPTION in $OPTIONS; do
@@ -65,10 +66,11 @@ elif [ "$jbtype" = "Rootful" ]; then
               "4") output4="-s";;
               "5") output5="--force-revert";;
               "6") output6="-e 'serial=3'";;
-              "7") output7="-v";;
+              "7") output7="--force-revert -f -c";;
+              "8") output7="-v";;
           esac
       done
-      echo "$output1 $output2 $output3 $output4 $output5 $output6 $output7" > /usr/bin/.args
+      echo "$output1 $output2 $output3 $output4 $output5 $output6 $output7 $output8"> /usr/bin/.args
       /usr/bin/palera1n_menu
   else
       echo "Cancelled"
